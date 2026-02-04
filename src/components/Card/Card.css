@@ -1,41 +1,43 @@
 .Card {
   display: flex;
   flex-direction: column;
-  background-color: #fff;
-  border-radius: 8px;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
 }
 
 .Card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: var(--gray-300);
 }
 
 .Card__image-link {
   display: block;
   aspect-ratio: 1;
   overflow: hidden;
-  background-color: #f5f5f5;
+  background-color: var(--surface);
 }
 
 .Card__image {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transition: transform 0.3s;
+  transition: transform 0.3s ease;
 }
 
 .Card__image-link:hover .Card__image {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .Card__image--placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #999;
+  color: var(--text-muted);
   font-size: 0.875rem;
 }
 
@@ -49,23 +51,24 @@
 .Card__name {
   font-size: 0.938rem;
   font-weight: 500;
-  color: #333;
+  color: var(--text-primary);
   text-decoration: none;
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  transition: color 0.2s ease;
 }
 
 .Card__name:hover {
-  color: #0066cc;
+  color: var(--primary-600);
   text-decoration: underline;
 }
 
 .Card__price {
   font-size: 1.125rem;
   font-weight: 700;
-  color: #000;
+  color: var(--text-primary);
   margin: 0;
 }

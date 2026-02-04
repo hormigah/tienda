@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import type { IProduct } from '@/types';
+import { AddCart } from '@/components';
 import './Card.css';
 
 interface CardProps {
-  product: IProduct;
+  readonly product: IProduct;
 }
 
 export default function Card({ product }: CardProps) {
@@ -29,6 +30,7 @@ export default function Card({ product }: CardProps) {
             {price.symbol} {price.price}
           </p>
         )}
+        <AddCart product={product} />
       </div>
     </article>
   );

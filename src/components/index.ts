@@ -1,4 +1,9 @@
+export { default as AddCart } from './AddCart';
 export { default as Card } from './Card';
+export { default as Cart } from './Cart';
+export { default as Footer } from './Footer';
+export { default as Header } from './Header';
 export { default as Layout } from './Layout';
 export { default as List } from './List';
+export { default as NavBar } from './NavBar';
 export { default as Slider } from './Slider';

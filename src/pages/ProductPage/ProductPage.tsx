@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useApiProduct } from '@/api';
-import { Slider } from '@/components';
+import { AddCart, Slider } from '@/components';
 import './ProductPage.css';
 
 export default function ProductPage() {
@@ -47,6 +47,7 @@ export default function ProductPage() {
             {price.symbol} {price.price}
           </p>
         )}
+        <AddCart product={product} />
       </div>
     </div>
   );
