@@ -31,9 +31,9 @@ export default function AddCart({ product }: AddCartProps) {
   return (
     <div className="AddCart">
       <div className="AddCart__quantity">
-        <label htmlFor="quantity" className="AddCart__label">Cantidad:</label>
+        <label htmlFor={`quantity-${product.id}`} className="AddCart__label">Cantidad:</label>
         <input
-          id="quantity"
+          id={`quantity-${product.id}`}
           type="number"
           min="1"
           value={quantity}

@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useApiProduct } from '@/api';
-import { AddCart, Slider } from '@/components';
+import { AddCart, Loading, Slider } from '@/components';
 import './ProductPage.css';
 
 export default function ProductPage() {
@@ -10,7 +10,7 @@ export default function ProductPage() {
   if (isLoading) {
     return (
       <div className="ProductPage ProductPage--loading" data-testid="product-page-loading">
-        <p>Cargando producto...</p>
+        <Loading />
       </div>
     );
   }

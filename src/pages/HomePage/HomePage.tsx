@@ -1,11 +1,13 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useApiProductList } from '@/api';
-import { List, NavBar } from '@/components';
+import { List, Loading } from '@/components';
 import './HomePage.css';
 
 export default function HomePage() {
   const { products, isLoading, error } = useApiProductList();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search') ?? '';
 
   const filteredProducts = useMemo(() => {
     if (!products || !searchQuery) return products;
@@ -14,14 +16,13 @@ export default function HomePage() {
     );
   }, [products, searchQuery]);
 
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-  };
-
   if (isLoading) {
     return (
-      <div className="home-page home-page--loading" data-testid="home-page-loading">
-        <p>Cargando productos...</p>
+      <div className="home-page" data-testid="home-page-loading">
+        <div className="home-page__content">
+          <h1 className="home-page__title">Nuestros Productos</h1>
+          <Loading />
+        </div>
       </div>
     );
   }
@@ -36,7 +37,6 @@ export default function HomePage() {
 
   return (
     <div className="home-page" data-testid="home-page">
-      <NavBar onSearch={handleSearch} />
       <div className="home-page__content">
         <h1 className="home-page__title">Nuestros Productos</h1>
         {filteredProducts && filteredProducts.length > 0 ? (

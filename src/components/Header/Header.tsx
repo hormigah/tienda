@@ -7,14 +7,10 @@ export default function Header() {
   const { isCartOpen, openCart, closeCart } = useCart();
   const totalQuantity = useAppSelector(state => state.cart.totalQuantity);
 
-  const handleSearch = (query: string) => {
-    console.log('Buscar:', query);
-  };
-
   return (
     <>
       <header className="Header">
-        <NavBar onSearch={handleSearch}/>
+        <NavBar />
         <button 
           className="Header__cart" 
           aria-label="Carrito de compras"

@@ -59,6 +59,31 @@ export default function Cart({ isOpen, onClose }: CartProps) {
     }
   };
 
+  const handleComprar = () => {
+    if (items.length === 0) return;
+
+    const subtotal = Math.round(totalAmount / 1.19 * 100) / 100;
+    const impuestos = Math.round((totalAmount - subtotal) * 100) / 100;
+
+    const compra = {
+      fechaCompra: new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' }),
+      items: items.map((item) => ({
+        sku: item.id,
+        cantidad: item.quantity,
+        precioUnitario: item.price,
+        totalItem: item.totalPrice,
+      })),
+      subtotal,
+      impuestos,
+      valorTotal: totalAmount,
+    };
+
+    const jsonString = JSON.stringify(compra, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -124,12 +149,20 @@ export default function Cart({ isOpen, onClose }: CartProps) {
                 <div className="Cart__total-section">
                   <strong>Total: ${totalAmount}</strong>
                 </div>
-                <button 
-                  onClick={() => dispatch(clearCart())}
-                  className="Cart__clear"
-                >
-                  Vaciar Carrito
-                </button>
+                <div className="Cart__buttons">
+                  <button
+                    onClick={() => dispatch(clearCart())}
+                    className="Cart__clear"
+                  >
+                    Vaciar Carrito
+                  </button>
+                  <button
+                    onClick={handleComprar}
+                    className="btn-primary Cart__buy"
+                  >
+                    Comprar
+                  </button>
+                </div>
               </div>
             </>
           )}

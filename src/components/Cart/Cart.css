@@ -183,6 +183,31 @@
   color: var(--text-primary);
 }
 
+.Cart__buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.Cart__buttons .Cart__clear {
+  flex: 1;
+}
+
+.Cart__buy {
+  flex: 1;
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.Cart__buy:hover {
+  background-color: var(--primary-600);
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
