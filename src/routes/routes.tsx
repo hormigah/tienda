@@ -1,6 +1,6 @@
 import { createBrowserRouter, type RouteObject, RouterProvider } from 'react-router-dom';
 import { Layout } from '@/components';
-import { HomePage, NotFoundPage } from '@/pages';
+import { HomePage, NotFoundPage, ProductPage } from '@/pages';
 
 const routeConfig: RouteObject[] = [
   {
@@ -10,6 +10,10 @@ const routeConfig: RouteObject[] = [
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: '/producto/:id',
+        element: <ProductPage />,
       },
     ],
   },

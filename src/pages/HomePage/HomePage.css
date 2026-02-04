@@ -1,0 +1,26 @@
+.HomePage {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.HomePage--loading,
+.HomePage--error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.HomePage__title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 2rem;
+  color: #333;
+}
+
+@media (max-width: 640px) {
+  .HomePage {
+    padding: 1rem;
+  }
+}
