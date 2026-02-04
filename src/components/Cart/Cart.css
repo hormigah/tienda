@@ -231,17 +231,17 @@
     width: 100vw;
     max-width: 100vw;
   }
-  
+
   .cart__table th,
   .cart__table td {
     padding: 0.5rem 0.25rem;
     font-size: 0.75rem;
   }
-  
+
   .cart__product {
     max-width: 100px;
   }
-  
+
   .cart__quantity-input {
     width: 50px;
   }
