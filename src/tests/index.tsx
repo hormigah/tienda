@@ -5,17 +5,10 @@ import {
   type RenderResult,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import type {
-  JSX,
-  JSXElementConstructor,
-  PropsWithChildren,
-  ReactNode,
-} from 'react';
+import type { JSX, JSXElementConstructor, PropsWithChildren, ReactNode } from 'react';
 import type { PathRouteProps } from 'react-router-dom';
 import { MockRouterProvider, MockRouterProviderByHook } from './components';
-import TestAppProviders, {
-  type TestAppProvidersProps,
-} from './TestAppProviders';
+import TestAppProviders, { type TestAppProvidersProps } from './TestAppProviders';
 import type { RouteParams } from './types';
 
 export function renderComponent(component: ReactNode): RenderResult {
@@ -40,8 +33,7 @@ export function renderHook<Props extends PropsWithChildren, Result>(
 ) {
   const options: RenderHookOptions<Props> = {};
   if (wrapper) {
-    options.wrapper =
-      TestAppProviders as JSXElementConstructor<TestAppProvidersProps>;
+    options.wrapper = TestAppProviders as JSXElementConstructor<TestAppProvidersProps>;
   }
   return _renderHook(callback, options);
 }

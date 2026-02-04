@@ -4,13 +4,13 @@ import './NavBar.css';
 
 export default function NavBar() {
   return (
-    <nav className="NavBar">
-      <div className="NavBar__brand">
-        <Link to="/" className="NavBar__logo">
+    <nav className="navbar">
+      <div className="navbar__brand">
+        <Link to="/" className="navbar__logo">
           Tienda
         </Link>
       </div>
-      <div className="NavBar__search">
+      <div className="navbar__search">
         <Search />
       </div>
     </nav>

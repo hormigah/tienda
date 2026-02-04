@@ -1,6 +1,6 @@
-import { apiClient } from "@/api/v1/utils/apiClient";
-import type { ProductsResponse } from "../types";
-import type { IProduct } from "@/types";
+import { apiClient } from '@/api/v1/utils/apiClient';
+import type { ProductsResponse } from '../types';
+import type { IProduct } from '@/types';
 
 export async function fetchProductList(): Promise<ProductsResponse> {
   const { data } = await apiClient.get<ProductsResponse>('/category');

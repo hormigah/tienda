@@ -1,4 +1,4 @@
-.Card {
+.card {
   display: flex;
   flex-direction: column;
   background-color: var(--background);
@@ -9,31 +9,31 @@
   transition: all 0.2s ease;
 }
 
-.Card:hover {
+.card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   border-color: var(--gray-300);
 }
 
-.Card__image-link {
+.card__image-link {
   display: block;
   aspect-ratio: 1;
   overflow: hidden;
   background-color: var(--surface);
 }
 
-.Card__image {
+.card__image {
   width: 100%;
   height: 100%;
   object-fit: contain;
   transition: transform 0.3s ease;
 }
 
-.Card__image-link:hover .Card__image {
+.card__image-link:hover .card__image {
   transform: scale(1.02);
 }
 
-.Card__image--placeholder {
+.card__image--placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,14 +41,14 @@
   font-size: 0.875rem;
 }
 
-.Card__content {
+.card__content {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   padding: 1rem;
 }
 
-.Card__name {
+.card__name {
   font-size: 0.938rem;
   font-weight: 500;
   color: var(--text-primary);
@@ -61,12 +61,12 @@
   transition: color 0.2s ease;
 }
 
-.Card__name:hover {
+.card__name:hover {
   color: var(--primary-600);
   text-decoration: underline;
 }
 
-.Card__price {
+.card__price {
   font-size: 1.125rem;
   font-weight: 700;
   color: var(--text-primary);

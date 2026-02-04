@@ -1,0 +1,24 @@
+.Layout {
+  min-height: 100vh;
+}
+
+.Layout__content {
+  width: 100%;
+}
+
+.Layout__container {
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .Layout__container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

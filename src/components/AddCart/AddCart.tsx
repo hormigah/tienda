@@ -17,13 +17,16 @@ export default function AddCart({ product }: AddCartProps) {
   const handleAddToCart = () => {
     const price = product.prices[0];
     if (price) {
-      dispatch(addItem({
-        id: product.id,
-        name: product.displayName,
-        quantity,
-        price: price.priceWithoutFormatting,
-        totalPrice: price.priceWithoutFormatting * quantity,
-      }));
+      dispatch(
+        addItem({
+          id: product.id,
+          sku: product.sku,
+          name: product.displayName,
+          quantity,
+          price: price.priceWithoutFormatting,
+          totalPrice: price.priceWithoutFormatting * quantity,
+        })
+      );
       openCart();
     }
   };
@@ -31,7 +34,9 @@ export default function AddCart({ product }: AddCartProps) {
   return (
     <div className="AddCart">
       <div className="AddCart__quantity">
-        <label htmlFor={`quantity-${product.id}`} className="AddCart__label">Cantidad:</label>
+        <label htmlFor={`quantity-${product.id}`} className="AddCart__label">
+          Cantidad:
+        </label>
         <input
           id={`quantity-${product.id}`}
           type="number"
@@ -41,8 +46,8 @@ export default function AddCart({ product }: AddCartProps) {
           className="AddCart__input"
         />
       </div>
-      <button 
-        className="AddCart__button btn-primary" 
+      <button
+        className="AddCart__button btn-primary"
         onClick={handleAddToCart}
         disabled={!product.prices[0]}
       >

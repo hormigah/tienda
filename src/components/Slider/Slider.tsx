@@ -22,33 +22,37 @@ export default function Slider({ images, alt = 'Product image' }: SliderProps) {
   };
 
   if (!images || images.length === 0) {
-    return <div className="Slider Slider--empty">No hay imágenes disponibles</div>;
+    return <div className="slider slider--empty">No hay imágenes disponibles</div>;
   }
 
   return (
-    <div className="Slider">
-      <div className="Slider__main">
+    <div className="slider">
+      <div className="slider__main">
         <button
-          className="Slider__button Slider__button--prev"
+          className="slider__button slider__button--prev"
           onClick={goToPrevious}
           aria-label="Imagen anterior"
         >
           &#10094;
         </button>
-        <img src={images[currentIndex]} alt={`${alt} ${currentIndex + 1}`} className="Slider__image" />
+        <img
+          src={images[currentIndex]}
+          alt={`${alt} ${currentIndex + 1}`}
+          className="slider__image"
+        />
         <button
-          className="Slider__button Slider__button--next"
+          className="slider__button slider__button--next"
           onClick={goToNext}
           aria-label="Imagen siguiente"
         >
           &#10095;
         </button>
       </div>
-      <div className="Slider__thumbnails">
+      <div className="slider__thumbnails">
         {images.map((image, index) => (
           <button
             key={index}
-            className={`Slider__thumbnail ${index === currentIndex ? 'Slider__thumbnail--active' : ''}`}
+            className={`slider__thumbnail ${index === currentIndex ? 'slider__thumbnail--active' : ''}`}
             onClick={() => goToSlide(index)}
             aria-label={`Ver imagen ${index + 1}`}
           >

@@ -1,7 +1,7 @@
 export interface ProductsResponse {
   data: {
     result: ProductResponse[];
-  }
+  };
 }
 
 export interface ProductResponse {

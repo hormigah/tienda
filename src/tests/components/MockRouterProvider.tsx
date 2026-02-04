@@ -1,10 +1,5 @@
 import type { ReactNode } from 'react';
-import {
-  MemoryRouter,
-  Route,
-  Routes,
-  type PathRouteProps,
-} from 'react-router-dom';
+import { MemoryRouter, Route, Routes, type PathRouteProps } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import type { RouteParams } from '../types';
 
@@ -35,9 +30,7 @@ export default function MockRouterProvider({
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path={path} element={children} />
-          {routes
-            ? routes.map(route => <Route {...route} key={route.path} />)
-            : null}
+          {routes ? routes.map((route) => <Route {...route} key={route.path} />) : null}
         </Route>
       </Routes>
     </MemoryRouter>

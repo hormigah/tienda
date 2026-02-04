@@ -1,4 +1,4 @@
-.NavBar {
+.navbar {
   display: flex;
   align-items: center;
   gap: 2rem;
@@ -11,11 +11,11 @@
   backdrop-filter: blur(8px);
 }
 
-.NavBar__brand {
+.navbar__brand {
   flex-shrink: 0;
 }
 
-.NavBar__logo {
+.navbar__logo {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-primary);
@@ -23,11 +23,11 @@
   transition: color 0.2s ease;
 }
 
-.NavBar__logo:hover {
+.navbar__logo:hover {
   color: var(--primary-600);
 }
 
-.NavBar__search {
+.navbar__search {
   flex: 1;
   max-width: 600px;
 }
@@ -106,13 +106,13 @@
 }
 
 @media (max-width: 640px) {
-  .NavBar {
+  .navbar {
     flex-direction: column;
     gap: 1rem;
     padding: 1rem;
   }
 
-  .NavBar__search {
+  .navbar__search {
     width: 100%;
     max-width: none;
   }

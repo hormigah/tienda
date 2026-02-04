@@ -8,9 +8,7 @@ interface SearchProps {
   readonly placeholder?: string;
 }
 
-export default function Search({
-  placeholder = 'Buscar productos...',
-}: SearchProps) {
+export default function Search({ placeholder = 'Buscar productos...' }: SearchProps) {
   const [query, setQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -69,12 +67,12 @@ export default function Search({
   }, []);
 
   return (
-    <div className="Search">
-      <div className="Search__input-container">
+    <div className="search">
+      <div className="search__input-container">
         <input
           ref={inputRef}
           type="text"
-          className="Search__input"
+          className="search__input"
           placeholder={placeholder}
           value={query}
           onChange={handleInputChange}
@@ -82,23 +80,37 @@ export default function Search({
           onFocus={() => query.length > 0 && setShowSuggestions(true)}
         />
         {query && (
-          <button className="Search__clear" onClick={handleClear} aria-label="Limpiar búsqueda">
+          <button className="search__clear" onClick={handleClear} aria-label="Limpiar búsqueda">
             &times;
           </button>
         )}
-        <button className="Search__button" disabled={!query.trim()} onClick={handleSearch} aria-label="Buscar">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <button
+          className="search__button"
+          disabled={!query.trim()}
+          onClick={handleSearch}
+          aria-label="Buscar"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <circle cx="11" cy="11" r="8" />
             <path d="m21 21-4.35-4.35" />
           </svg>
         </button>
       </div>
       {showSuggestions && filteredSuggestions.length > 0 && (
-        <ul ref={suggestionsRef} className="Search__suggestions">
+        <ul ref={suggestionsRef} className="search__suggestions">
           {filteredSuggestions.map((suggestion) => (
             <li key={suggestion}>
               <button
-                className="Search__suggestion"
+                className="search__suggestion"
                 onClick={() => handleSuggestionClick(suggestion)}
               >
                 {suggestion}

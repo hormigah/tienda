@@ -13,20 +13,20 @@ export default function Card({ product }: CardProps) {
   const price = prices?.[0];
 
   return (
-    <article className="Card" data-testid="product-card">
-      <Link to={`/producto/${id}`} className="Card__image-link">
+    <article className="card" data-testid="product-card">
+      <Link to={`/producto/${id}`} className="card__image-link">
         {image ? (
-          <img src={image} alt={displayName} className="Card__image" />
+          <img src={image} alt={displayName} className="card__image" />
         ) : (
-          <div className="Card__image Card__image--placeholder">Sin imagen</div>
+          <div className="card__image card__image--placeholder">Sin imagen</div>
         )}
       </Link>
-      <div className="Card__content">
-        <Link to={`/product/${id}`} className="Card__name">
+      <div className="card__content">
+        <Link to={`/producto/${id}`} className="card__name">
           {displayName}
         </Link>
         {price && (
-          <p className="Card__price">
+          <p className="card__price">
             {price.symbol} {price.price}
           </p>
         )}
