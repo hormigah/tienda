@@ -4,7 +4,15 @@ import './Cart.css';
 export type CartProps = UseCartProps;
 
 export default function Cart({ isOpen, onClose }: CartProps) {
- const { handleClearCart, handleQuantityChange, handleRemoveItem, handleBuy, items, totalAmount, totalQuantity } = useCart({ isOpen, onClose });
+  const {
+    handleClearCart,
+    handleQuantityChange,
+    handleRemoveItem,
+    handleBuy,
+    items,
+    totalAmount,
+    totalQuantity,
+  } = useCart({ isOpen, onClose });
   if (!isOpen) return null;
 
   return (

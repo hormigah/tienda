@@ -10,7 +10,7 @@ export interface UseCartProps {
 export default function useCart({ isOpen, onClose }: UseCartProps) {
   const dispatch = useAppDispatch();
   const { items, totalAmount, totalQuantity } = useAppSelector((state) => state.cart);
-  
+
   const handleQuantityChange = (id: string, newQuantity: number) => {
     const item = items.find((item) => item.id === id);
     if (!item) return;
