@@ -1,101 +1,10 @@
-import { useEffect } from 'react';
+import useCart, { type UseCartProps } from './hooks/useCart';
 import './Cart.css';
-import { useAppSelector, useAppDispatch } from '@/store/hooks';
-import { addItem, removeItem, clearCart } from '@/store/cartSlice';
 
-interface CartProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+export type CartProps = UseCartProps;
 
 export default function Cart({ isOpen, onClose }: CartProps) {
-  const dispatch = useAppDispatch();
-  const { items, totalAmount, totalQuantity } = useAppSelector((state) => state.cart);
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isOpen]);
-
-  const handleQuantityChange = (id: string, newQuantity: number) => {
-    const item = items.find((item) => item.id === id);
-    if (!item) return;
-
-    const currentQuantity = item.quantity;
-    const difference = newQuantity - currentQuantity;
-
-    if (difference > 0) {
-      // Add items
-      for (let i = 0; i < difference; i++) {
-        dispatch(
-          addItem({
-            id: item.id,
-            sku: item.sku,
-            name: item.name,
-            quantity: 1,
-            price: item.price,
-            totalPrice: item.price,
-          })
-        );
-      }
-    } else if (difference < 0) {
-      // Remove items
-      for (let i = 0; i < Math.abs(difference); i++) {
-        dispatch(removeItem(id));
-      }
-    }
-  };
-
-  const handleRemoveItem = (id: string) => {
-    const item = items.find((item) => item.id === id);
-    if (item) {
-      for (let i = 0; i < item.quantity; i++) {
-        dispatch(removeItem(id));
-      }
-    }
-  };
-
-  const handleComprar = () => {
-    if (items.length === 0) return;
-
-    const subtotal = Math.round((totalAmount / 1.19) * 100) / 100;
-    const impuestos = Math.round((totalAmount - subtotal) * 100) / 100;
-
-    const compra = {
-      fechaCompra: new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' }),
-      items: items.map((item) => ({
-        sku: item.sku,
-        cantidad: item.quantity,
-        precioUnitario: item.price,
-        totalItem: item.totalPrice,
-      })),
-      subtotal,
-      impuestos,
-      valorTotal: totalAmount,
-    };
-
-    const jsonString = JSON.stringify(compra, null, 2);
-    const blob = new Blob([jsonString], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `compra_${Date.now()}.json`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    URL.revokeObjectURL(url);
-
-    dispatch(clearCart());
-    onClose();
-  };
-
+ const { handleClearCart, handleQuantityChange, handleRemoveItem, handleBuy, items, totalAmount, totalQuantity } = useCart({ isOpen, onClose });
   if (!isOpen) return null;
 
   return (
@@ -146,7 +55,7 @@ export default function Cart({ isOpen, onClose }: CartProps) {
                           onChange={(e) =>
                             handleQuantityChange(
                               item.id,
-                              Math.max(1, parseInt(e.target.value) || 1)
+                              Math.max(1, Number.parseInt(e.target.value) || 1)
                             )
                           }
                           className="cart__quantity-input"
@@ -181,10 +90,10 @@ export default function Cart({ isOpen, onClose }: CartProps) {
                   <strong>Total: ${totalAmount}</strong>
                 </div>
                 <div className="cart__buttons">
-                  <button onClick={() => dispatch(clearCart())} className="cart__clear">
+                  <button onClick={handleClearCart} className="cart__clear">
                     Vaciar Carrito
                   </button>
-                  <button onClick={handleComprar} className="btn-primary cart__buy">
+                  <button onClick={handleBuy} className="btn-primary cart__buy">
                     Comprar
                   </button>
                 </div>
