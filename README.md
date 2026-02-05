@@ -18,6 +18,12 @@ cd tienda
 
 # Instalar dependencias
 npm install
+
+# Configurar variables de entorno
+cp .env.example .env
+
+# Editar `.env` con la URL del backend:
+VITE_API_BASE_URL=https://apim-dev-proxy.sodhc.co/test-jasson/api
 ```
 
 ### Scripts Disponibles
