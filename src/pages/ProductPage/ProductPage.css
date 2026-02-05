@@ -59,9 +59,16 @@
   margin: 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .ProductPage {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .ProductPage {
     padding: 1rem;
   }
 

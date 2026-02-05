@@ -1,4 +1,4 @@
-.Header {
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14,7 +14,7 @@
   }
 }
 
-.Header__cart {
+.header__cart {
   position: relative;
   background: none;
   border: 1px solid var(--border);
@@ -29,13 +29,13 @@
   justify-content: center;
 }
 
-.Header__cart:hover {
+.header__cart:hover {
   background-color: var(--primary-50);
   border-color: var(--primary-500);
   color: var(--primary-600);
 }
 
-.Header__cart-badge {
+.header__cart-badge {
   position: absolute;
   top: -8px;
   right: -8px;
@@ -53,12 +53,12 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.Header .NavBar {
+.header .navbar {
   flex: 1;
 }
 
 @media (max-width: 640px) {
-  .Header__cart {
+  .header__cart {
     margin-right: 1rem;
     padding: 0.5rem;
   }

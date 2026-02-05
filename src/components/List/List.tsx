@@ -8,7 +8,7 @@ interface ListProps {
 
 export default function List({ products }: ListProps) {
   return (
-    <div className="List">
+    <div className="list">
       {products.map((product) => (
         <Card key={product.id} product={product} />
       ))}

@@ -32,9 +32,9 @@ export default function AddCart({ product }: AddCartProps) {
   };
 
   return (
-    <div className="AddCart">
-      <div className="AddCart__quantity">
-        <label htmlFor={`quantity-${product.id}`} className="AddCart__label">
+    <div className="add-cart">
+      <div className="add-cart__quantity">
+        <label htmlFor={`quantity-${product.id}`} className="add-cart__label">
           Cantidad:
         </label>
         <input
@@ -43,11 +43,11 @@ export default function AddCart({ product }: AddCartProps) {
           min="1"
           value={quantity}
           onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-          className="AddCart__input"
+          className="add-cart__input"
         />
       </div>
       <button
-        className="AddCart__button btn-primary"
+        className="add-cart__button btn-primary"
         onClick={handleAddToCart}
         disabled={!product.prices[0]}
       >

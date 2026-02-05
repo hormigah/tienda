@@ -10,7 +10,7 @@ export function useApiProductList(
 ) {
   const { data, ...rest } = useQuery<ProductsResponse, BackendError, IProduct[]>({
     ...queryOptions,
-    queryKey: queryKeysProduct.list,
+    queryKey: queryKeysProduct.lists(),
     queryFn: () => fetchProductList(),
     select: adaptProducts,
   });
@@ -27,7 +27,7 @@ export function useApiProduct(
 ) {
   const { products, ...rest } = useApiProductList({
     ...queryOptions,
-    queryKey: queryKeysProduct.list,
+    queryKey: queryKeysProduct.lists(),
     enabled: Boolean(productId) && queryOptions?.enabled,
   });
 

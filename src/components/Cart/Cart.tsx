@@ -1,10 +1,11 @@
 import useCart, { type UseCartProps } from './hooks/useCart';
 import './Cart.css';
 
-export type CartProps = UseCartProps;
+export type CartProps = Readonly<UseCartProps>;
 
 export default function Cart({ isOpen, onClose }: CartProps) {
   const {
+    cartRef,
     handleClearCart,
     handleQuantityChange,
     handleRemoveItem,
@@ -13,12 +14,19 @@ export default function Cart({ isOpen, onClose }: CartProps) {
     totalAmount,
     totalQuantity,
   } = useCart({ isOpen, onClose });
+
   if (!isOpen) return null;
 
   return (
     <>
-      <div className="cart__overlay" onClick={onClose} />
-      <div className="cart">
+      <div className="cart__overlay" onClick={onClose} aria-hidden="true" />
+      <div
+        className="cart"
+        ref={cartRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Carrito de compras"
+      >
         <div className="cart__header">
           <h2 className="cart__title">Carrito de Compras ({totalQuantity})</h2>
           <button className="cart__close" onClick={onClose} aria-label="Cerrar carrito">
@@ -63,7 +71,7 @@ export default function Cart({ isOpen, onClose }: CartProps) {
                           onChange={(e) =>
                             handleQuantityChange(
                               item.id,
-                              Math.max(1, Number.parseInt(e.target.value) || 1)
+                              Math.max(1, Number.parseInt(e.target.value, 10) || 1)
                             )
                           }
                           className="cart__quantity-input"

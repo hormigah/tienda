@@ -1,55 +1,43 @@
-import { useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '@/store/hooks';
-import { addItem, removeItem, clearCart } from '@/store/cartSlice';
-
+import { useCallback, useEffect, useRef } from 'react';
+import {
+  updateQuantity,
+  removeItemFull,
+  clearCart,
+  selectCartItems,
+  selectCartTotalAmount,
+  selectCartTotalQuantity,
+  useAppSelector,
+  useAppDispatch,
+} from '@/store';
 export interface UseCartProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+const FOCUSABLE_SELECTOR = 'button, input, [href], [tabindex]:not([tabindex="-1"])';
+
 export default function useCart({ isOpen, onClose }: UseCartProps) {
+  const cartRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
-  const { items, totalAmount, totalQuantity } = useAppSelector((state) => state.cart);
+  const items = useAppSelector(selectCartItems);
+  const totalAmount = useAppSelector(selectCartTotalAmount);
+  const totalQuantity = useAppSelector(selectCartTotalQuantity);
 
-  const handleQuantityChange = (id: string, newQuantity: number) => {
-    const item = items.find((item) => item.id === id);
-    if (!item) return;
+  const handleQuantityChange = useCallback(
+    (id: string, newQuantity: number) => {
+      dispatch(updateQuantity({ id, quantity: newQuantity }));
+    },
+    [dispatch]
+  );
 
-    const currentQuantity = item.quantity;
-    const difference = newQuantity - currentQuantity;
+  const handleRemoveItem = useCallback(
+    (id: string) => {
+      dispatch(removeItemFull(id));
+    },
+    [dispatch]
+  );
 
-    if (difference > 0) {
-      // Add items
-      for (let i = 0; i < difference; i++) {
-        dispatch(
-          addItem({
-            id: item.id,
-            sku: item.sku,
-            name: item.name,
-            quantity: 1,
-            price: item.price,
-            totalPrice: item.price,
-          })
-        );
-      }
-    } else if (difference < 0) {
-      // Remove items
-      for (let i = 0; i < Math.abs(difference); i++) {
-        dispatch(removeItem(id));
-      }
-    }
-  };
-
-  const handleRemoveItem = (id: string) => {
-    const item = items.find((item) => item.id === id);
-    if (item) {
-      for (let i = 0; i < item.quantity; i++) {
-        dispatch(removeItem(id));
-      }
-    }
-  };
-
-  const handleBuy = () => {
+  const handleBuy = useCallback(() => {
     if (items.length === 0) return;
 
     const subtotal = Math.round((totalAmount / 1.19) * 100) / 100;
@@ -69,18 +57,18 @@ export default function useCart({ isOpen, onClose }: UseCartProps) {
     };
 
     const jsonString = JSON.stringify(compra, null, 2);
-    const blob = new Blob([jsonString], { type: 'application/json' });
+    const blob = new Blob([jsonString], { type: 'application/json;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     window.open(url, '_blank');
     setTimeout(() => URL.revokeObjectURL(url), 1000);
 
     dispatch(clearCart());
     onClose();
-  };
+  }, [items, totalAmount, dispatch, onClose]);
 
-  const handleClearCart = () => {
+  const handleClearCart = useCallback(() => {
     dispatch(clearCart());
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     if (isOpen) {
@@ -89,12 +77,51 @@ export default function useCart({ isOpen, onClose }: UseCartProps) {
       document.body.style.overflow = 'unset';
     }
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
     return () => {
       document.body.style.overflow = 'unset';
+      document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen]);
+  }, [isOpen, onClose]);
+
+  useEffect(() => {
+    if (!isOpen || !cartRef.current) return;
+
+    const cart = cartRef.current;
+    const firstFocusable = cart.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+    firstFocusable?.focus();
+
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+
+      const focusableElements = cart.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+      if (focusableElements.length === 0) return;
+
+      const first = focusableElements[0];
+      const last = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleTab);
+    return () => document.removeEventListener('keydown', handleTab);
+  }, [isOpen, items]);
 
   return {
+    cartRef,
     handleClearCart,
     handleQuantityChange,
     handleRemoveItem,

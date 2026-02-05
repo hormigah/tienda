@@ -11,6 +11,7 @@ interface SearchProps {
 export default function Search({ placeholder = 'Buscar productos...' }: SearchProps) {
   const [query, setQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLUListElement>(null);
   const navigate = useNavigate();
@@ -23,30 +24,57 @@ export default function Search({ placeholder = 'Buscar productos...' }: SearchPr
     const value = e.target.value;
     setQuery(value);
     setShowSuggestions(value.length > 0);
+    setActiveIndex(-1);
   };
 
   const handleSearch = () => {
     if (query.trim()) {
       navigate(`/?search=${encodeURIComponent(query.trim())}`);
       setShowSuggestions(false);
+      setActiveIndex(-1);
     }
+  };
+
+  const selectSuggestion = (suggestion: string) => {
+    setQuery(suggestion);
+    setShowSuggestions(false);
+    setActiveIndex(-1);
+    navigate(`/?search=${encodeURIComponent(suggestion)}`);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleSearch();
+    if (!showSuggestions || filteredSuggestions.length === 0) {
+      if (e.key === 'Enter') handleSearch();
+      return;
     }
-  };
 
-  const handleSuggestionClick = (suggestion: string) => {
-    setQuery(suggestion);
-    setShowSuggestions(false);
-    navigate(`/?search=${encodeURIComponent(suggestion)}`);
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setActiveIndex((prev) => (prev < filteredSuggestions.length - 1 ? prev + 1 : 0));
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setActiveIndex((prev) => (prev > 0 ? prev - 1 : filteredSuggestions.length - 1));
+        break;
+      case 'Enter':
+        if (activeIndex >= 0) {
+          selectSuggestion(filteredSuggestions[activeIndex]);
+        } else {
+          handleSearch();
+        }
+        break;
+      case 'Escape':
+        setShowSuggestions(false);
+        setActiveIndex(-1);
+        break;
+    }
   };
 
   const handleClear = () => {
     setQuery('');
     setShowSuggestions(false);
+    setActiveIndex(-1);
     inputRef.current?.focus();
   };
 
@@ -78,6 +106,11 @@ export default function Search({ placeholder = 'Buscar productos...' }: SearchPr
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           onFocus={() => query.length > 0 && setShowSuggestions(true)}
+          role="combobox"
+          aria-expanded={showSuggestions && filteredSuggestions.length > 0}
+          aria-controls="search-suggestions"
+          aria-activedescendant={activeIndex >= 0 ? `suggestion-${activeIndex}` : undefined}
+          autoComplete="off"
         />
         {query && (
           <button className="search__clear" onClick={handleClear} aria-label="Limpiar búsqueda">
@@ -106,12 +139,23 @@ export default function Search({ placeholder = 'Buscar productos...' }: SearchPr
         </button>
       </div>
       {showSuggestions && filteredSuggestions.length > 0 && (
-        <ul ref={suggestionsRef} className="search__suggestions">
-          {filteredSuggestions.map((suggestion) => (
-            <li key={suggestion}>
+        <ul
+          ref={suggestionsRef}
+          id="search-suggestions"
+          className="search__suggestions"
+          role="listbox"
+        >
+          {filteredSuggestions.map((suggestion, index) => (
+            <li
+              key={suggestion}
+              id={`suggestion-${index}`}
+              role="option"
+              aria-selected={index === activeIndex}
+            >
               <button
-                className="search__suggestion"
-                onClick={() => handleSuggestionClick(suggestion)}
+                className={`search__suggestion ${index === activeIndex ? 'search__suggestion--active' : ''}`}
+                onClick={() => selectSuggestion(suggestion)}
+                tabIndex={-1}
               >
                 {suggestion}
               </button>

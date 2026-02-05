@@ -1,4 +1,4 @@
-.AddCart {
+.add-cart {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -6,19 +6,19 @@
   align-items: center;
 }
 
-.AddCart__quantity {
+.add-cart__quantity {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
-.AddCart__label {
+.add-cart__label {
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-primary);
 }
 
-.AddCart__input {
+.add-cart__input {
   width: 80px;
   padding: 0.5rem;
   font-size: 1rem;
@@ -30,13 +30,7 @@
   transition: all 0.2s ease;
 }
 
-.AddCart__input:focus {
-  outline: none;
-  border-color: var(--primary-500);
-  box-shadow: 0 0 0 3px var(--primary-100);
-}
-
-.AddCart__button {
+.add-cart__button {
   width: 100%;
   padding: 1rem 2rem;
   font-size: 1rem;

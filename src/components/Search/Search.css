@@ -32,8 +32,6 @@
 }
 
 .search__input:focus {
-  border-color: var(--primary-500);
-  box-shadow: 0 0 0 3px var(--primary-100);
   background-color: var(--background);
 }
 
@@ -91,6 +89,11 @@
   color: var(--text-primary);
 }
 
+.search__clear:focus-visible {
+  outline: 2px solid var(--primary-500);
+  outline-offset: 2px;
+}
+
 .search__suggestions {
   position: absolute;
   top: 100%;
@@ -120,8 +123,14 @@
   transition: background-color 0.2s ease;
 }
 
-.search__suggestion:hover {
+.search__suggestion:hover,
+.search__suggestion--active {
   background-color: var(--surface);
+}
+
+.search__suggestion:focus-visible {
+  background-color: var(--primary-100);
+  outline: none;
 }
 
 @media (max-width: 640px) {

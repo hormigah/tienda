@@ -58,6 +58,11 @@
   color: var(--text-primary);
 }
 
+.cart__close:focus-visible {
+  outline: 2px solid var(--primary-500);
+  outline-offset: 2px;
+}
+
 .cart__content {
   flex: 1;
   padding: 1.5rem;
@@ -124,11 +129,6 @@
   transition: all 0.2s ease;
 }
 
-.cart__quantity-input:focus {
-  outline: none;
-  border-color: var(--primary-500);
-  box-shadow: 0 0 0 2px var(--primary-100);
-}
 
 .cart__actions {
   text-align: center;
@@ -150,6 +150,11 @@
 
 .cart__remove:hover {
   background-color: rgba(239, 68, 68, 0.1);
+}
+
+.cart__remove:focus-visible {
+  outline: 2px solid var(--error-500);
+  outline-offset: 2px;
 }
 
 .cart__footer {

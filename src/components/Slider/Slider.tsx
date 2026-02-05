@@ -51,7 +51,7 @@ export default function Slider({ images, alt = 'Product image' }: SliderProps) {
       <div className="slider__thumbnails">
         {images.map((image, index) => (
           <button
-            key={index}
+            key={image}
             className={`slider__thumbnail ${index === currentIndex ? 'slider__thumbnail--active' : ''}`}
             onClick={() => goToSlide(index)}
             aria-label={`Ver imagen ${index + 1}`}
